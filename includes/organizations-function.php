@@ -26,8 +26,8 @@ function cv_show_organization() {
     global $wpdb;
     $results = $wpdb->get_results("
         SELECT o.*, ot.OrganizationType
-        FROM {$wpdb->prefix}cmvine_organizations AS o
-        INNER JOIN {$wpdb->prefix}cmvine_organizationtypes AS ot
+        FROM {$wpdb->prefix}cmvine_Organizations AS o
+        INNER JOIN {$wpdb->prefix}cmvine_OrganizationTypes AS ot
         ON o.OrganizationTypesID = ot.OrganizationTypesID
     ");
 
@@ -88,7 +88,7 @@ function cv_add_organization_page() {
 
         // Insert the new organization into the database
         $wpdb->insert(
-            $wpdb->prefix . 'cmvine_organizations',
+            $wpdb->prefix . 'cmvine_Organizations',
             array(
                 'OrganizationName' => $type, 
                 'OrganizationTypesID' => $category, 
@@ -105,7 +105,7 @@ function cv_add_organization_page() {
     }
 
     // Retrieve organization types
-    $types = $wpdb->get_results("SELECT OrganizationTypesID, OrganizationType FROM {$wpdb->prefix}cmvine_organizationtypes");
+    $types = $wpdb->get_results("SELECT OrganizationTypesID, OrganizationType FROM {$wpdb->prefix}cmvine_OrganizationTypes");
 
     // Display the form
     echo '<div class="wrap">';

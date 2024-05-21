@@ -18,7 +18,7 @@ function MemberBulkUploadFunc() {
     }
 
     global $wpdb;
-    $types = $wpdb->get_results("SELECT OrganizationID, OrganizationName FROM {$wpdb->prefix}cmvine_organizations");
+    $types = $wpdb->get_results("SELECT OrganizationID, OrganizationName FROM {$wpdb->prefix}cmvine_Organizations");
     $Membership = $wpdb->get_results("SELECT ID, post_title FROM {$wpdb->prefix}posts WHERE post_type = 'memberpressproduct'");
     $webhookKey = $wpdb->get_results("SELECT option_value FROM {$wpdb->prefix}options WHERE option_name = 'mpdt_api_key'");
     $home_url = home_url();
@@ -142,7 +142,7 @@ function handle_bulk_upload() {
                 $memberId = isset($responseArray['first_txn']['member']) ? $responseArray['first_txn']['member'] : 0;
 
                 $wpdb->insert(
-                    $wpdb->prefix . 'cmvine_membersorganizations',
+                    $wpdb->prefix . 'cmvine_MembersOrganizations',
                     [
                         'memberID' => $memberId,
                         'OrganizationID' => intval($_POST['organizationName']),
@@ -171,7 +171,7 @@ add_action('wp_ajax_bulk_upload', 'handle_bulk_upload');
 function cmvine_cleanup_user_data($user_id) {
     global $wpdb;
     $wpdb->delete(
-        $wpdb->prefix . 'cmvine_membersorganizations',
+        $wpdb->prefix . 'cmvine_MembersOrganizations',
         ['memberID' => $user_id],
         ['%d']
     );

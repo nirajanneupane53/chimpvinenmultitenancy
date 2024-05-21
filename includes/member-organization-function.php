@@ -20,9 +20,9 @@ function cv_show_Members() {
     // Adjust the query to fetch MemberPress membership details
     $results = $wpdb->get_results("
     SELECT u.display_name, u.user_email, o.OrganizationName, mo.MemberType, mp.post_title AS product_name
-    FROM {$prefix}cmvine_membersorganizations AS mo
+    FROM {$prefix}cmvine_MembersOrganizations AS mo
     INNER JOIN {$prefix}users AS u ON mo.memberID = u.ID
-    INNER JOIN {$prefix}cmvine_organizations AS o ON mo.OrganizationID = o.OrganizationID
+    INNER JOIN {$prefix}cmvine_Organizations AS o ON mo.OrganizationID = o.OrganizationID
     LEFT JOIN (
         SELECT mt.user_id, mt.product_id
         FROM {$prefix}mepr_transactions AS mt
@@ -135,7 +135,7 @@ function cv_add_member_page() {
             if ($user_id) {
                 // Insert into custom table
                 $wpdb->insert(
-                    $wpdb->prefix . 'cmvine_membersorganizations',
+                    $wpdb->prefix . 'cmvine_MembersOrganizations',
                     array(
                         'memberID' => $user_id,
                         'OrganizationID' => $organization_id,
@@ -165,7 +165,7 @@ function cv_add_member_page() {
     ));
 
     // Get organizations
-    $organizations = $wpdb->get_results("SELECT OrganizationID, OrganizationName FROM {$wpdb->prefix}cmvine_organizations");
+    $organizations = $wpdb->get_results("SELECT OrganizationID, OrganizationName FROM {$wpdb->prefix}cmvine_Organizations");
 
     // Display the form
     echo '<div class="wrap">';
